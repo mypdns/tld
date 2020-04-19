@@ -14,5 +14,4 @@ env:
     - TZ: UTC
 
 script:
-  - wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}' > ${TRAVIS_BUILD_DIR}/tld.list
-  - git add . && git commit -m "New TLDs" && git push
+  - bash ${TRAVIS_BUILD_DIR}/tld.sh
