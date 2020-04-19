@@ -18,6 +18,10 @@ after_script:
   - git push -u origin ${CI_COMMIT_REF_NAME}
 
 build:
+  stage: build
+  only:
+    - master
+  script:
     - echo "Building"
     - git checkout -b ${CI_COMMIT_REF_NAME}
     - bash $CI_PROJECT_DIR/tld.sh
