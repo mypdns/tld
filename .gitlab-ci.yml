@@ -35,3 +35,5 @@ test:
   script:
     - echo "Do a test here"
     - wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}'
+    - printf "Last updated $(date '%A +%H:%M %Z (UTC %z)')\n\nWith love fromMy Privacy DNS\n<https://www.mypdns.org/source/tld/>" > $CI_PROJECT_DIR/commit_message
+    - cat $CI_PROJECT_DIR/commit_message
