@@ -17,25 +17,13 @@ after_script:
   - git commit -m 'Auto committed from the CI runner [skip ci]'
   - git push -u origin ${CI_COMMIT_REF_NAME}
 
-build1:
+build:
     - echo "Building"
     - git checkout -b ${CI_COMMIT_REF_NAME}
     - bash $CI_PROJECT_DIR/tld.sh
 
-test1:
+test:
   stage: test
   script:
     - echo "Do a test here"
-    - bash $CI_PROJECT_DIR/tld.sh
-
-test2:
-  stage: test
-  script:
-    - echo "Do another parallel test here"
-    - bash $CI_PROJECT_DIR/tld.sh
-
-deploy1:
-  stage: deploy
-  script:
-    - echo "Do your deploy here"
     - bash $CI_PROJECT_DIR/tld.sh
