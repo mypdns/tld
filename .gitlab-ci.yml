@@ -14,7 +14,7 @@ after_script:
   - git add .
   - git status
   #- git commit -m "Last updated $(date '%A +%H:%M %Z (UTC %z)')"
-  - printf "Last updated $(date '+%A %H:%M %Z (UTC %z)')\n\nWith love fromMy Privacy DNS\n<https://www.mypdns.org/source/tld/>" > $CI_PROJECT_DIR/commit_message
+  - printf "Last generated $(date '+%A %H:%M %Z (UTC %z)')\n\n\nWith love from My Privacy DNS\n<https://www.mypdns.org/source/tld/>\n" > $CI_PROJECT_DIR/commit_message
   - git commit -F $CI_PROJECT_DIR/commit_message
   - git push -u origin ${CI_COMMIT_REF_NAME}
 
@@ -23,6 +23,8 @@ build:
   only:
     - schedules
     - triggers
+    - /^issue-.*$/i
+    - merge_requests
   script:
     - echo "Building"
     - git checkout -b ${CI_COMMIT_REF_NAME}
@@ -35,5 +37,5 @@ test:
   script:
     - echo "Do a test here"
     - wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}'
-    - printf "Last updated $(date '+%A %H:%M %Z (UTC %z)')\n\nWith love fromMy Privacy DNS\n<https://www.mypdns.org/source/tld/>" > $CI_PROJECT_DIR/commit_message
+    - printf "Last generated $(date '+%A %H:%M %Z (UTC %z)')\n\n\nWith love from My Privacy DNS\n<https://www.mypdns.org/source/tld/>\n" > $CI_PROJECT_DIR/commit_message
     - cat $CI_PROJECT_DIR/commit_message
