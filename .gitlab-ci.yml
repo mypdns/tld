@@ -13,7 +13,9 @@ after_script:
   - echo -e "After script section...\n"
   - git add .
   - git status
-  - git commit -m "Last updated $(date '%A +%H:%M %Z (UTC %z)')"
+  #- git commit -m "Last updated $(date '%A +%H:%M %Z (UTC %z)')"
+  - printf "Last updated $(date '%A +%H:%M %Z (UTC %z)')\n\nWith love fromMy Privacy DNS\n<https://www.mypdns.org/source/tld/>" > $CI_PROJECT_DIR/commit_message
+  - git commit -F $CI_PROJECT_DIR/commit_message
   - git push -u origin ${CI_COMMIT_REF_NAME}
 
 build:
@@ -28,6 +30,8 @@ build:
 
 test:
   stage: test
+  except:
+    - schedules
   script:
     - echo "Do a test here"
     - wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}'
