@@ -13,7 +13,7 @@ after_script:
   - echo -e "After script section...\n"
   - git add .
   - git status
-  - git commit -m "Last updated: `date '+%H:%M %Z (UTC %z)'`"
+  - git commit -m "Last updated: $(date '+%H:%M %Z (UTC %z)')"
   - git push -u origin ${CI_COMMIT_REF_NAME}
 
 build:
