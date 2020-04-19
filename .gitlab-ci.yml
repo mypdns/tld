@@ -32,4 +32,4 @@ test:
   stage: test
   script:
     - echo "Do a test here"
-    - bash $CI_PROJECT_DIR/tld.sh
+    - wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}'
