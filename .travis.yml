@@ -1,0 +1,13 @@
+os: linux
+dist: focal
+
+language: generic
+
+env:
+  global:
+  - GIT_NAME: Spirillen
+  - GIT_EMAIL: 44526987+spirillen@users.noreply.github.com
+  - TRAVIS_REPO_SLUG: "${TRAVIS_REPO_SLUG}"
+  - GIT_BRANCH: "${TRAVIS_BRANCH}"
+  - TZ: UTC
+  - PYTHON_VERSION: 3.9.1
