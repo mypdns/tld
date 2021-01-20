@@ -1,0 +1,49 @@
+name: Update TLD list
+on:
+  schedule:
+    - cron: "22 3 1 * *"
+  push:
+    branches:
+      - "master"
+
+env:
+  GIT_NAME: "${{ secrets.GIT_BOT_NAME }}"
+  GIT_EMAIL: "${{ secrets.GIT_BOT_EMAIL }}"
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+jobs:
+  scheduler:
+    name: Trigger action
+    runs-on: "${{ matrix.os }}"
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python_version:
+          - "3.9.1"
+        os:
+          - ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        name: Clone repository
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Fetch the list and clear the dot
+        run: |
+          wget -qO- 'http://data.iana.org/TLD/tlds-alpha-by-domain.txt' \
+          | awk '/^(#|$)/{ next }; { printf("%s\n",tolower($1))}' \
+          > "${{ github.workspace }}/tld.list"
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "$GIT_EMAIL"
+          git config --local user.name "$GIT_NAME"
+          git commit -m "Launch test" -a
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
