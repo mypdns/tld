@@ -40,7 +40,7 @@ jobs:
         run: |
           git config --local user.email "$GIT_EMAIL"
           git config --local user.name "$GIT_NAME"
-          git commit -m "Launch test" -a
+          git commit -m "Updated TLD list from IANA" -a
 
       - name: Push changes
         uses: ad-m/github-push-action@master
